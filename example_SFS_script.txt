@@ -1,0 +1,34 @@
+library(data.table)
+library(stringr)
+library(tidyr)
+library(mgcv)
+library(ggplot2)
+library(e1071)
+library(Hmisc)
+library(plyr)
+setwd("your_directory")
+files<-list.files(".", pattern="your_files*")
+file.list<-sapply(files, read.table, header=FALSE, simplify=FALSE, na.strings=c("nan"))
+
+filesround<-lapply(file.list, function(x) {
+  round(x[,6],4)
+})
+
+filesr<-lapply(filesround,as.numeric)
+
+files.subset <- lapply(filesr, function(x)x[x <1.0000])
+
+
+Africamean<-lapply(files.subset, function(x) {
+  mean(x, na.rm=TRUE)
+})
+
+
+
+mean.list<-lapply(file.list, meanSFS)
+
+plots <- lapply(file.list, function(x) {ggplot(x, aes_string(x[,6]))+geom_histogram()})
+
+lapply(names(plots), 
+       function(x) ggsave(filename=paste(x,".pdf",sep=""), plot=plots[[x]]))
+

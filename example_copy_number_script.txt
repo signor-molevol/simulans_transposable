@@ -1,0 +1,19 @@
+for i in ERR*
+do
+printf "\ntrans<-read.table(\""$i".average\", as.is=TRUE, header=TRUE)\n" >> $i.R
+printf "\ngen<-read.table(\""$i".average\", as.is=TRUE, header=TRUE)\n" >> $i.R
+printf "\nvar<-gen[1,]\n" >> $i.R
+printf "\ntrans$copy<-t(t(trans) / var)\n" >> $i.R
+printf "\nwrite.table(trans, file=\""$i".copy\", quote=FALSE)\n" >> $i.R
+done
+
+
+
+for i in SRR*
+do
+printf "\ntrans<-read.table(\""$i".average\", as.is=TRUE, header=TRUE)\n" >> $i.R
+printf "\ngen<-read.table(\""$i".average\", as.is=TRUE, header=TRUE)\n" >> $i.R
+printf "\nvar<-gen[1,]\n" >> $i.R
+printf "\ntrans$copy<-t(t(trans) / var)\n" >> $i.R
+printf "\nwrite.table(trans, file=\""$i".copy\", quote=FALSE)\n" >> $i.R
+done

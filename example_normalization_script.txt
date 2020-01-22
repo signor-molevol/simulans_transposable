@@ -1,0 +1,6 @@
+for i in ERR*
+do
+printf "\nx<-read.table(\""$i".counts\", as.is=TRUE, header=FALSE, na.strings=\"0\")\n" >> $i.R
+printf "\nx$average<-x[,4]/x[,3]\n" >> $i.R
+printf "\nwrite.table(x, file=\""$i".average\", quote=FALSE)\n" >> $i.R
+done
